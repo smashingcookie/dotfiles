@@ -1,0 +1,11 @@
+__pycache__
+.pytestcache
+.coverage
+
+.vs
+.vscode
+.mycfg
+.envrc
+.venv
+
+*.sln
