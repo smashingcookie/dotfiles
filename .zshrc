@@ -121,12 +121,9 @@ export PATH="/usr/lib/ccache:${PATH}"
 export PATH="/home/mnussbaum/.local/bin:${PATH}"
 
 # setup artifactory
-if [ -f .setup_artifactory.sh ]
+if [ -f ~/.setup_artifactory.sh ]
 then
-  source .setup_artifactory.sh
-  #conan
-  export CONAN_LOGIN_USER_NAME=mnussbau
-  export CONAN_PASSWORD=$NAT_API_KEY
+  source ~/.setup_artifactory.sh
 fi
 
 # gpg / yubikey
@@ -135,5 +132,8 @@ then
   export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
 fi
 
-#export GPG_TTY=$(tty)
-#gpg-connect-agent updatestartuptty /bye >/dev/null
+#setup any aliases
+if [ -f ~/.setup_alias.sh ]
+then
+  source ~/.setup_alias.sh
+fi
