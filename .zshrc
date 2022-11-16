@@ -109,6 +109,13 @@ source $ZSH/oh-my-zsh.sh
 ###################################################################################################
 # custom adjustments
 
+# Pyenv virtualenv loading
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+
 
 # make direnv available
 eval "$(direnv hook zsh)"
