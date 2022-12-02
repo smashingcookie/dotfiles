@@ -13,6 +13,28 @@ fi;
 config checkout
 config config status.showUntrackedFiles no
 
+
+#install some pyenv requirements as recommended per documentation:
+# https://github.com/pyenv/pyenv/wiki#suggested-build-environment
+sudo apt-get update && install \
+  make \
+  build-essential \
+  libssl-dev \
+  zlib1g-dev \
+  libbz2-dev \
+  libreadline-dev \
+  libsqlite3-dev \
+  wget \
+  curl \
+  llvm \
+  libncursesw5-dev \
+  xz-utils \
+  tk-dev \
+  libxml2-dev \
+  libxmlsec1-dev \
+  libffi-dev \
+  liblzma-dev
+
 # Install pyenv
 git clone https://github.com/pyenv/pyenv.git ~/.pyenv
 git clone https://github.com/pyenv/pyenv-virtualenv.git ~/.pyenv/plugins/pyenv-virtualenv
