@@ -109,9 +109,14 @@ source $ZSH/oh-my-zsh.sh
 ###################################################################################################
 # custom adjustments
 
+# setup conan etc (do before pyenv install as pip might get confused)
+export PATH="/home/mnussbaum/.local/bin:${PATH}"
+
+
+
 # Pyenv virtualenv loading
 export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
+command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
@@ -124,8 +129,6 @@ eval "$(direnv hook zsh)"
 # setup ccache
 export PATH="/usr/lib/ccache:${PATH}"
 
-# setup conan etc
-export PATH="/home/mnussbaum/.local/bin:${PATH}"
 
 # setup artifactory
 if [ -f ~/.setup_artifactory.sh ]
