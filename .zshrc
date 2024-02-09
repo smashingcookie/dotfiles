@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/home/mnussbaum/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 
 # To manage dotfiles (INCLUDING this .bashrc) without accidentally using regular git in a working directory [https://developer.atlassian.com/blog/2016/02/best-way-to-store-dotfiles-git-bare-repo/]
 alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
@@ -110,7 +110,7 @@ source $ZSH/oh-my-zsh.sh
 # custom adjustments
 
 # setup conan etc (do before pyenv install as pip might get confused)
-export PATH="/home/mnussbaum/.local/bin:${PATH}"
+export PATH="$HOME/.local/bin:${PATH}"
 
 
 

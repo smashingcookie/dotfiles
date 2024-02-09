@@ -1,4 +1,10 @@
-git clone --bare https://github.com/smashingcookie/dotfiles.git $HOME/.dotfiles
+##########################################################################
+# to install on a new system copy this file to home and run it
+
+# inspired by: https://www.atlassian.com/git/tutorials/dotfiles
+##########################################################################
+
+git clone --bare <git-repo-url> https://github.com/smashingcookie/dotfiles.git/.dotfiles
 function config {
    /usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME $@
 }
@@ -38,6 +44,10 @@ sudo apt-get update && install \
 # Install pyenv
 git clone https://github.com/pyenv/pyenv.git ~/.pyenv
 git clone https://github.com/pyenv/pyenv-virtualenv.git ~/.pyenv/plugins/pyenv-virtualenv
+
+#install oh-my-zsh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
 
 # Intall k plugin
 export ZSH=$HOME/.oh-my-zsh
