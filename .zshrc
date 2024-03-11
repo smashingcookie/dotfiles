@@ -76,7 +76,7 @@ ZSH_THEME="jispwoso"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git virtualenv dirhistory gpg-agent k)
+plugins=(git virtualenv dirhistory gpg-agent k zsh-bat)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -143,6 +143,7 @@ then
 fi
 
 #setup any aliases
+alias ka="k -hA"
 if [ -f ~/.setup_alias.sh ]
 then
   source ~/.setup_alias.sh

@@ -1,29 +1,21 @@
 ##########################################################################
-# to install on a new system copy this file to home and run it
+# to install on a new system copy this file to home and run it:
+# bash -c "$(curl https://raw.githubusercontent.com/smashingcookie/dotfiles/main/.install_dotfiles.sh)"
 
 # inspired by: https://www.atlassian.com/git/tutorials/dotfiles
 ##########################################################################
 
-git clone --bare <git-repo-url> https://github.com/smashingcookie/dotfiles.git/.dotfiles
-function config {
-   /usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME $@
-}
-mkdir -p .config-backup
-config checkout
-if [ $? = 0 ]; then
-  echo "Checked out config.";
-  else
-    echo "Backing up pre-existing dot files.";
-    config checkout 2>&1 | egrep "\s+\." | awk {'print $1'} | xargs -I{} mv {} .config-backup/{}
-fi;
-config checkout
-config config status.showUntrackedFiles no
 
-
-#install some pyenv requirements as recommended per documentation:
+##########################################################################
+# install some pyenv requirements as recommended per documentation:
 # https://github.com/pyenv/pyenv/wiki#suggested-build-environment
-sudo apt-get update && install \
-  make \
+
+# required for non-interactive apt-get:
+echo 'debconf debconf/frontend select Noninteractive' | sudo debconf-set-selections
+
+sudo apt-get update
+sudo TZ=Etc/UTC apt-get install -y --no-install-recommends tzdata
+sudo apt-get update && sudo apt-get install -y --no-install-recommends \
   build-essential \
   libssl-dev \
   zlib1g-dev \
@@ -41,49 +33,63 @@ sudo apt-get update && install \
   libffi-dev \
   liblzma-dev
 
-# Install pyenv
-git clone https://github.com/pyenv/pyenv.git ~/.pyenv
-git clone https://github.com/pyenv/pyenv-virtualenv.git ~/.pyenv/plugins/pyenv-virtualenv
+##########################################################################
+# additional dev env prerequisites
+sudo apt-get update && sudo apt-get install -y --no-install-recommends \
+  ca-certificates \
+  bat \
+  direnv \
+  ripgrep \
+  git \
+  tmux \
+  zsh
 
-#install oh-my-zsh
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+##########################################################################
+# setup tmux plugins
+git clone --depth 1 https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
+# install pyenv
+git clone --depth=1 https://github.com/pyenv/pyenv.git ~/.pyenv
+git clone --depth=1 https://github.com/pyenv/pyenv-virtualenv.git ~/.pyenv/plugins/pyenv-virtualenv
 
-# Intall k plugin
+# install oh-my-zsh
+zsh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+
+sudo chsh -s $(which zsh)
+
 export ZSH=$HOME/.oh-my-zsh
 source $ZSH/oh-my-zsh.sh
-git clone https://github.com/supercrabtree/k $ZSH_CUSTOM/plugins/k
+# Install k plugin
+git clone --depth=1 https://github.com/supercrabtree/k $ZSH_CUSTOM/plugins/k
+# Install bat plugin
+git clone --depth=1 https://github.com/fdellwing/zsh-bat.git $ZSH_CUSTOM/plugins/zsh-bat
 
+##########################################################################
+# checkout dotfiles (setup 'config' repo)
+git clone --bare https://github.com/smashingcookie/dotfiles.git $HOME/.dotfiles
+function config {
+   /usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME $@
+}
+mkdir -p .config-backup
+config checkout
+if [ $? = 0 ]; then
+  echo "Checked out config.";
+  else
+    echo "Backing up pre-existing dot files.";
+    config checkout 2>&1 | egrep "\s+\." | awk {'print $1'} | xargs -I{} mv {} .config-backup/{}
+fi;
+config checkout
+config config status.showUntrackedFiles no
+
+# set apt-get to interactive again:
+echo 'debconf debconf/frontend select Dialog' | sudo debconf-set-selections
+##########################################################################
 # possible todos:
-# - install direnv on host (apt-get install direnv)
 # - any requirements for other used plugins?
 # - ccache
 # - conan
 # - cmake
 # - vscode
-# - htop
 # - ssh setup
 # - gpg agent setup
-# - artifactory keys, e.g. dvc, conan, lfs?
-# - enable tmux plugin, setup tmux conf (below)
-
-#############################################################################################
-# # Install powerline fonts (to use with tmux-config)
-# # ---
-# cd /tmp
-# git clone https://github.com/powerline/fonts.git --depth=1
-# cd fonts
-# ./install.sh
-# # clean-up a bit
-# cd ..
-# rm -rf fonts
-
-# # Install tmux-config
-# # ---
-# cd ~/.tmux-config
-# # Patch tmux config for compatibility with tmux 3
-# # see https://github.com/samoshkin/tmux-config/pull/31 for details
-# curl -L https://patch-diff.githubusercontent.com/raw/samoshkin/tmux-config/pull/31.patch > /tmp/tmuxFix.patch
-# git apply /tmp/tmuxFix.patch
-# rm /tmp/tmuxFix.patch
-# ./install.sh
+# - switch to powerline10k theme
