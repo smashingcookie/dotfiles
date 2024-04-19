@@ -59,19 +59,26 @@ sudo chsh -s $(which zsh)
 
 export ZSH=$HOME/.oh-my-zsh
 source $ZSH/oh-my-zsh.sh
+
+export MYZSH_CUSTOM=${ZSH_CUSTOM:-~/.oh-my-zsh/custom}
 # powerlevel10k theme
-mkdir -p ~/.local/share/fonts
+mkdir -p ~/.local/share/fonts # install fonts for powerlevel10k
 cd ./local/share/fonts
 wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf
 wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold.ttf
 wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Italic.ttf
 wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold%20Italic.ttf
 cd -
-git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${MYZSH_CUSTOM}/themes/powerlevel10k
+
 # Install k plugin
-git clone --depth=1 https://github.com/supercrabtree/k $ZSH_CUSTOM/plugins/k
+git clone --depth=1 https://github.com/supercrabtree/k $MYZSH_CUSTOM/plugins/k
 # Install bat plugin
-git clone --depth=1 https://github.com/fdellwing/zsh-bat.git $ZSH_CUSTOM/plugins/zsh-bat
+git clone --depth=1 https://github.com/fdellwing/zsh-bat.git $MYZSH_CUSTOM/plugins/zsh-bat
+# install zsh-autosuggestions plugin
+git clone --depth=1 https://github.com/zsh-users/zsh-autosuggestions ${MYZSH_CUSTOM}/plugins/zsh-autosuggestions
+# install fzf-zsh-plugin
+git clone --depth 1 https://github.com/unixorn/fzf-zsh-plugin.git ${MYZSH_CUSTOM}/plugins/fzf-zsh-plugin
 
 ##########################################################################
 # checkout dotfiles (setup 'config' repo)
