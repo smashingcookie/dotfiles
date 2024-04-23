@@ -44,6 +44,25 @@ sudo apt-get update && sudo apt-get install -y --no-install-recommends \
   tmux \
   zsh
 
+# git-delta, for ubuntu24.04 plus possible via apt too
+# see also https://dandavison.github.io/delta/introduction.html
+wget "https://github.com/dandavison/delta/releases/download/0.17.0/git-delta_0.17.0_amd64.deb"
+sudo dpkg -i git-delta_0.17.0_amd64.deb
+rm git-delta_0.17.0_amd64.deb
+
+# git config
+git config --global credential.helper "cache --timeout=3600"
+git config --global pull.rebase true
+git config --global push.rescurseSubmodules check
+# git config for delta
+git config --global core.pager delta
+git config --global interactive.diffFilter "delta --color-only"
+git config --global delta.navigate true
+git config --global merge.conflictstyle diff3
+git config --global diff.colorMoved default
+git config --global delta.hyperlinks true
+git config --global delta.hyperlinks-file-link-format "vscode://file/{path}:{line}"
+
 ##########################################################################
 # setup tmux plugins
 git clone --depth 1 https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
