@@ -9,12 +9,22 @@
 ##########################################################################
 # install some pyenv requirements as recommended per documentation:
 # https://github.com/pyenv/pyenv/wiki#suggested-build-environment
+# TODO => clean again, no longer needed.
 
 # required for non-interactive apt-get:
 echo 'debconf debconf/frontend select Noninteractive' | sudo debconf-set-selections
 
 sudo apt-get update
-sudo TZ=Etc/UTC apt-get install -y --no-install-recommends tzdata
+# use tzdata rather than timedatectl - timedatectl is lacking in some docker images
+sudo TZ=Europe/Berlin apt-get install -y --no-install-recommends tzdata
+sudo apt-get update && sudo apt-get install -y --no-install-recommends \
+
+# required for non-interactive apt-get:
+echo 'debconf debconf/frontend select Noninteractive' | sudo debconf-set-selections
+
+sudo apt-get update
+# use tzdata rather than timedatectl - timedatectl is lacking in some docker images
+sudo TZ=Europe/Berlin apt-get install -y --no-install-recommends tzdata
 sudo apt-get update && sudo apt-get install -y --no-install-recommends \
   build-essential \
   libssl-dev \
@@ -27,7 +37,6 @@ sudo apt-get update && sudo apt-get install -y --no-install-recommends \
   llvm \
   libncursesw5-dev \
   xz-utils \
-  tk-dev \
   libxml2-dev \
   libxmlsec1-dev \
   libffi-dev \
@@ -46,11 +55,12 @@ sudo apt-get update && sudo apt-get install -y --no-install-recommends \
 
 # git-delta, for ubuntu24.04 plus possible via apt too
 # see also https://dandavison.github.io/delta/introduction.html
-wget "https://github.com/dandavison/delta/releases/download/0.17.0/git-delta_0.17.0_amd64.deb"
-sudo dpkg -i git-delta_0.17.0_amd64.deb
-rm git-delta_0.17.0_amd64.deb
+wget "https://github.com/dandavison/delta/releases/download/0.18.2/git-delta_0.18.2_amd64.deb"
+sudo dpkg -i git-delta_0.18.2_amd64.deb
+rm git-delta_0.18.2_amd64.deb
 
 # git config
+git config --global user.name "smashingcookie"
 git config --global credential.helper "cache --timeout=3600"
 git config --global pull.rebase true
 git config --global push.rescurseSubmodules check
@@ -66,10 +76,6 @@ git config --global delta.hyperlinks-file-link-format "vscode://file/{path}:{lin
 ##########################################################################
 # setup tmux plugins
 git clone --depth 1 https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-
-# install pyenv
-git clone --depth=1 https://github.com/pyenv/pyenv.git ~/.pyenv
-git clone --depth=1 https://github.com/pyenv/pyenv-virtualenv.git ~/.pyenv/plugins/pyenv-virtualenv
 
 # install oh-my-zsh
 zsh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
@@ -121,9 +127,10 @@ echo 'debconf debconf/frontend select Dialog' | sudo debconf-set-selections
 ##########################################################################
 # possible todos:
 # - any requirements for other used plugins?
+# - uv
+# - vscode
 # - ccache
 # - conan
 # - cmake
-# - vscode
 # - ssh setup
 # - gpg agent setup

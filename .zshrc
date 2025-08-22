@@ -91,7 +91,6 @@ plugins=(
   gpg-agent
   k
   zsh-bat
-  zsh-autosuggestions
   fzf-zsh-plugin
 )
 
@@ -130,15 +129,6 @@ source $ZSH/oh-my-zsh.sh
 export PATH="$HOME/.local/bin:${PATH}"
 
 
-
-# Pyenv virtualenv loading
-export PYENV_ROOT="$HOME/.pyenv"
-command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
-
-
 # make direnv available
 eval "$(direnv hook zsh)"
 
@@ -169,9 +159,3 @@ fi
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-# make autosuggestions autocomplete with tab
-# https://github.com/zsh-users/zsh-autosuggestions/issues/532
-bindkey '^I'      autosuggest-accept
-ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(buffer-empty bracketed-paste accept-line push-line-or-edit)
-ZSH_AUTOSUGGEST_STRATEGY=(history completion)
-ZSH_AUTOSUGGEST_USE_ASYNC=true
