@@ -51,13 +51,15 @@ sudo apt-get update && sudo apt-get install -y --no-install-recommends \
   ripgrep \
   git \
   tmux \
+  eza \
+  zoxide \
   zsh
 
 # git-delta, for ubuntu24.04 plus possible via apt too
 # see also https://dandavison.github.io/delta/introduction.html
-wget "https://github.com/dandavison/delta/releases/download/0.18.2/git-delta_0.18.2_amd64.deb"
-sudo dpkg -i git-delta_0.18.2_amd64.deb
-rm git-delta_0.18.2_amd64.deb
+wget "https://github.com/dandavison/delta/releases/download/0.19.2/git-delta_0.19.2_amd64.deb"
+sudo dpkg -i git-delta_0.19.2_amd64.deb
+rm git-delta_0.19.2_amd64.deb
 
 # git config
 git config --global user.name "smashingcookie"
@@ -68,7 +70,7 @@ git config --global push.rescurseSubmodules check
 git config --global core.pager delta
 git config --global interactive.diffFilter "delta --color-only"
 git config --global delta.navigate true
-git config --global merge.conflictstyle diff3
+git config --global merge.conflictstyle zdiff3
 git config --global diff.colorMoved default
 git config --global delta.hyperlinks true
 git config --global delta.hyperlinks-file-link-format "vscode://file/{path}:{line}"
@@ -96,8 +98,6 @@ wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20B
 cd -
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${MYZSH_CUSTOM}/themes/powerlevel10k
 
-# Install k plugin
-git clone --depth=1 https://github.com/supercrabtree/k $MYZSH_CUSTOM/plugins/k
 # Install bat plugin
 git clone --depth=1 https://github.com/fdellwing/zsh-bat.git $MYZSH_CUSTOM/plugins/zsh-bat
 # install zsh-autosuggestions plugin
@@ -132,5 +132,5 @@ echo 'debconf debconf/frontend select Dialog' | sudo debconf-set-selections
 # - ccache
 # - conan
 # - cmake
-# - ssh setup
-# - gpg agent setup
+# - ssh
+# - gpg agent

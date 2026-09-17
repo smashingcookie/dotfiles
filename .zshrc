@@ -87,13 +87,13 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 plugins=(
   git
   virtualenv
-  dirhistory
   gpg-agent
-  k
   zsh-bat
   fzf-zsh-plugin
+  zoxide
 )
 
+export PATH=/opt/homebrew/bin:$PATH
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
@@ -133,15 +133,6 @@ export PATH="$HOME/.local/bin:${PATH}"
 eval "$(direnv hook zsh)"
 
 
-# setup ccache
-export PATH="/usr/lib/ccache:${PATH}"
-
-
-# setup artifactory
-if [ -f ~/.setup_artifactory.sh ]
-then
-  source ~/.setup_artifactory.sh
-fi
 
 # gpg / yubikey
 if [ -v gpgconf ]
@@ -150,7 +141,7 @@ then
 fi
 
 #setup any aliases
-alias ka="k -hA"
+alias ka="eza -lhA --git"
 if [ -f ~/.setup_alias.sh ]
 then
   source ~/.setup_alias.sh
@@ -159,3 +150,21 @@ fi
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+export HISTIGNORE='date'
+
+# opencode
+export PATH=/Users/martinschaufuss/.opencode/bin:$PATH
+
+# postgres
+export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/latest/bin
+
+# ripgrep
+export RIPGREP_CONFIG_PATH=~/.ripgrep.conf
+
+# ssh auto-load
+ssh-add --apple-use-keychain ~/.ssh/id_ed25519
+
+# cleanup python garbage
+pyclean () {
+    find . -type f -name '*.py[co]' -delete -o -type d -name __pycache__ -delete
+}
